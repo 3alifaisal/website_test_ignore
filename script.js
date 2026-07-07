@@ -188,7 +188,7 @@ const DINO_DELAY_MS    = 3000; // ms after drawing card before dress-up appears
 const SCRIPT = [
   { type:'msg', text:'Hey 👋',                                                          typing: 600  },
   { type:'msg', text:'Sorry for being not original',                                    typing: 1000 },
-  { type:'msg', text:'But I wanted to emphasize how much your gift meant to me',        typing: 1400 },
+  { type:'msg', text:'But I wanted to emphasize how much your gift meant to me, Athena', typing: 1400 },
 
   { type:'delay', ms: 1000 },
 
@@ -199,7 +199,7 @@ const SCRIPT = [
   { type:'gate', label:'Tap to open 📩' },
 
   // ---- Phase 2: knitting cake challenge ----
-  { type:'msg', text:'now let\'s knit your birthday cake! 🎂🧶',                                         typing: 900  },
+  { type:'msg', text:'now let\'s knit your birthday cake, bahan! 🎂🧶',                                         typing: 900  },
   { type:'msg', bubbleClass:'challenge-bubble', html:mkChallengeHTML(),                              typing:1500 },
 ];
 
@@ -668,7 +668,7 @@ function revealPostStep2() {
   setTimeout(() => {
     appendTypedBubble('but wait, there\'s more? 👀', 700, () => {
       setTimeout(() => {
-        appendTypedBubble('open this bahan! 💌', 800, () => {
+        appendTypedBubble('open this! 💌', 800, () => {
           setTimeout(() => {
             const postWrap = buildPostBubbleWrap();
             chatEl.insertBefore(postWrap, typingEl);
@@ -704,20 +704,20 @@ function restorePostIntroAndContinue() {
     wrap.appendChild(bubble);
     chatEl.insertBefore(wrap, typingEl);
   }
-  addStaticBubble('omg look out! 😱');
+  addStaticBubble('omg bestie look out! 😱');
   addStaticBubble('here comes the plane ✈️');
-  addStaticBubble('try and catch it bahan 😄');
+  addStaticBubble('try and catch it! 😄');
   scrollBottom();
   revealPostStep2();
 }
 
 function revealPostSequence() {
   // Step 1: three intro messages, then launch the plane
-  appendTypedBubble('omg look out! 😱', 1000, () => {
+  appendTypedBubble('omg bestie look out! 😱', 1000, () => {
     setTimeout(() => {
       appendTypedBubble('here comes the plane ✈️', 800, () => {
         setTimeout(() => {
-          appendTypedBubble('try and catch it bahan 😄', 600, () => {
+          appendTypedBubble('try and catch it! 😄', 600, () => {
             postIntroShown = true;
             launchFlyingPlane(revealPostStep2);
           });
