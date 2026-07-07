@@ -133,24 +133,6 @@ function showToast(msg) {
   }, 3000);
 }
 
-// ==================== STICKER ASSETS ====================
-const STICKER_AFTER_HI  = 'https://github.com/user-attachments/assets/847194f1-748a-4dfa-9ca0-f5328ce6ecf7';
-const STICKER_AFTER_BET = 'https://github.com/user-attachments/assets/d14a392f-0828-4423-8d50-cc61574e3d60';
-const STICKER_END_1     = 'https://github.com/user-attachments/assets/defd0182-a554-49e9-93d9-e1cb6c261ad3';
-const STICKER_END_2     = 'https://github.com/user-attachments/assets/c2ef7183-c644-40ca-9ba3-e1e8f029cf87';
-
-// mkStickerHTML — builds sticker img tag from a hardcoded URL constant (never user input).
-// Using createElement instead of string interpolation avoids any future XSS risk
-// if the src value were ever made dynamic.
-function mkStickerHTML(url) {
-  const img = document.createElement('img');
-  img.className = 'sticker-img';
-  img.src       = url;
-  img.alt       = 'sticker';
-  img.loading   = 'eager';
-  return img.outerHTML;
-}
-
 // ==================== MESSAGE TEMPLATES ====================
 function mkDrawingHTML() {
   return `<span class="chess-card-board">🎨 🖌️ ✨ 🌈 💕 🖼️</span>
@@ -166,17 +148,17 @@ function mkBirthdayHTML() {
 function mkChallengeHTML() {
   let slots = '';
   for (let i = 0; i < CHALLENGE_CLICKS; i++) {
-    slots += `<span class="candle-slot" id="candle-${i}">🕯️</span>`;
+    slots += `<span class="candle-slot" id="candle-${i}" style="opacity:0.2; filter:grayscale(100%); transition:all 0.3s; display:inline-block; font-size:1.4rem; margin:0.1rem;">🧶</span>`;
   }
   return `<div id="candle-grid">${slots}</div>
-    <button id="chat-challenge-btn">🕯️ Light a candle!</button>`;
+    <button id="chat-challenge-btn">🧶 Knit the birthday cake!</button>`;
 }
 
 function mkHeartfeltHTML() {
   return `<p><strong>Dear Athena,</strong></p>
+    <p>I want to start off this letter by mentioning how much I am proud of you, and how much you have grown since we first met. Its insane how much has changed since we first met.</p>
     <p>we got to know each other in krakow, that was 6 years ago, crazy how time flies. I have had the pleasure of being your best friend for all these years, and I would wish for many many more to come, filled with health, hope, learning and luck, and many many shenanigans.</p>
-    <p>Unlike the delivery of this website i hope that life gives you its sweetest fruits and rewards in the right time. I have watched you grow through many things (relationships, friendships, work, war and now most recently schooling again), change with the times (how you approach problems, how you assert your presence, how you talk and how serious your approach to life is), for the better (im proud of you bahan), youve been a solid pillar of support in my life, and i imagine in the lives of the people around you as well.</p>
-    <p>Let this year hold the highest grades and the craziest most heartwarming stories of your youth, lets grow together as people and as honorary family for you are my sister and i dont know what i would have done without you and your motivating strength, sarcastic inputs and tolerance for my horrible sense of humor.</p>
+    <p>I wish that you will stay on your path, and that everything you have planned for, will work out exactly how you imagine it. You are really a wonderful person and its all right for your life to be blessed and for you to feel a holy angel on your shoulder whenever you need it.</p>
     <p>Youre the bestiestest friend a guy could ask for and I hope i get to wish you for many, many decades to come,</p>
     <p class="heartfelt-sig">love, Ali. 💖</p>`;
 }
@@ -190,6 +172,11 @@ function mkPostBubbleHTML() {
 // Defined here (before SCRIPT) so mkChallengeHTML() can reference them
 // during SCRIPT array initialization without hitting the TDZ.
 const CHALLENGE_CLICKS = 24; // Athena is turning 24!
+const CAKE_PARTS = [
+  '🍰', '🍰', '🍰', '🍰', '🍰', '🍰', '🍰', '🍰', '🍰', '🍰', '🍰', '🍰',
+  '🍓', '🍓', '🍓', '🍓', '🍓', '🍓', '🍓', '🍓',
+  '🕯️', '🕯️', '🕯️', '🕯️'
+];
 const DINO_DELAY_MS    = 3000; // ms after drawing card before dress-up appears
 
 // ==================== MESSAGE SCRIPT ====================
@@ -199,23 +186,21 @@ const DINO_DELAY_MS    = 3000; // ms after drawing card before dress-up appears
 //   { type:'msg',    ... }    — show typing indicator then append bubble
 //   { type:'gate',   label }  — pause until user taps the input bar
 const SCRIPT = [
-  // ---- Pre-existing messages (already "sent" earlier today) ----
-  { type:'msg', bubbleClass:'',           text:'hi 👋',                                                          time:'10:28 AM', typing: 400  },
-  { type:'msg', bubbleClass:'sticker-bubble', html:mkStickerHTML(STICKER_AFTER_HI),                               time:'10:29 AM', typing: 600  },
-  { type:'msg', bubbleClass:'',           text:':)))))',                                                            time:'10:31 AM', typing: 350  },
+  { type:'msg', text:'Hey 👋',                                                          typing: 600  },
+  { type:'msg', text:'Sorry for being not original',                                    typing: 1000 },
+  { type:'msg', text:'But I wanted to emphasize how much your gift meant to me',        typing: 1400 },
 
-  { type:'delay', ms: 1400 },
+  { type:'delay', ms: 1000 },
 
   // ---- Phase 1: calm intro (auto-play) ----
   { type:'msg', text:'Since you know me so well bestie',                                                           typing: 850  },
   { type:'msg', text:'You probably already guessed your birthday present is this website bahan 😂',                   typing: 1600 },
   { type:'msg', text:'bet you didnt think it would be an actual whatsapp chat tho 😂',                typing: 1250 },
-  { type:'msg', bubbleClass:'sticker-bubble', html:mkStickerHTML(STICKER_AFTER_BET),                 typing: 800  },
 
   { type:'gate', label:'Tap to open 📩' },
 
-  // ---- Phase 2: candle challenge ----
-  { type:'msg', text:'now light your candles bestie 🕯️',                                                   typing: 900  },
+  // ---- Phase 2: knitting cake challenge ----
+  { type:'msg', text:'now let\'s knit your birthday cake! 🎂🧶',                                         typing: 900  },
   { type:'msg', bubbleClass:'challenge-bubble', html:mkChallengeHTML(),                              typing:1500 },
 ];
 
@@ -473,10 +458,15 @@ document.addEventListener('click', (e) => {
 function restoreChallenge() {
   const btn        = document.getElementById('chat-challenge-btn');
 
-  // Restore lit candles (no pop animation for already-lit ones)
+  // Restore knitted cake parts (no pop animation for already-knitted ones)
   for (let i = 0; i < challengeCount; i++) {
     const candleEl = document.getElementById('candle-' + i);
-    if (candleEl) candleEl.classList.add('lit');
+    if (candleEl) {
+      candleEl.textContent = CAKE_PARTS[i] || '🍰';
+      candleEl.style.opacity = '1';
+      candleEl.style.filter = 'none';
+      candleEl.classList.add('lit');
+    }
   }
 
   if (challengeDone) {
@@ -500,20 +490,12 @@ function buildHeartfeltWrap() {
   return wrap;
 }
 
-// Builds a sticker wrap element from a hardcoded URL constant.
-// The url parameter is always one of STICKER_END_1 / STICKER_END_2 —
-// it is never sourced from sessionStorage or user input, so img.src is safe.
-function buildStickerWrap(url) {
+function buildTextWrap(text) {
   const wrap   = document.createElement('div');
   wrap.className = 'wa-msg received';
   const bubble = document.createElement('div');
-  bubble.className = 'wa-bubble sticker-bubble';
-  const img = document.createElement('img');
-  img.className = 'sticker-img';
-  img.src       = url;   // hardcoded constant — not from sessionStorage
-  img.alt       = 'sticker';
-  img.loading   = 'eager';
-  bubble.appendChild(img);
+  bubble.className = 'wa-bubble';
+  bubble.textContent = text;
   const ts = document.createElement('span');
   ts.className   = 'wa-time';
   ts.textContent = getTime();
@@ -521,6 +503,7 @@ function buildStickerWrap(url) {
   wrap.appendChild(bubble);
   return wrap;
 }
+
 
 function buildDrawingWrap() {
   const wrap   = document.createElement('div');
@@ -579,9 +562,9 @@ function loadState() {
 
   if (heartfeltShown) {
     chatEl.insertBefore(buildHeartfeltWrap(), typingEl);
-    // Restore end stickers that had appeared after the heartfelt
-    if (endStickersShown >= 1) chatEl.insertBefore(buildStickerWrap(STICKER_END_1), typingEl);
-    if (endStickersShown >= 2) chatEl.insertBefore(buildStickerWrap(STICKER_END_2), typingEl);
+    // Restore messages that had appeared after the heartfelt
+    if (endStickersShown >= 1) chatEl.insertBefore(buildTextWrap('Also... since you love drawing so much 🎨'), typingEl);
+    if (endStickersShown >= 2) chatEl.insertBefore(buildTextWrap('I made you a little canvas to sketch on! ✨'), typingEl);
     if (endStickersShown >= 3) chatEl.insertBefore(buildDrawingWrap(), typingEl);
   }
 
@@ -634,9 +617,12 @@ function initChallenge() {
     if (challengeDone) return;
     challengeCount++;
 
-    // Light the newly added candle
+    // Knit the next cake part
     const candleEl = document.getElementById('candle-' + (challengeCount - 1));
     if (candleEl) {
+      candleEl.textContent = CAKE_PARTS[challengeCount - 1] || '🍰';
+      candleEl.style.opacity = '1';
+      candleEl.style.filter = 'none';
       candleEl.classList.add('lit', 'just-lit');
       setTimeout(() => candleEl.classList.remove('just-lit'), 500);
     }
@@ -752,16 +738,16 @@ function revealHeartfelt() {
     scrollBottom();
     launchConfettiBurst(80);
     playFanfare();
-    // End stickers appear shortly after the heartfelt message
+    // End messages appear shortly after the heartfelt message
     setTimeout(() => {
       endStickersShown = 1;
-      chatEl.insertBefore(buildStickerWrap(STICKER_END_1), typingEl);
+      chatEl.insertBefore(buildTextWrap('Also... since you love drawing so much 🎨'), typingEl);
       scrollBottom();
       playDing();
     }, 1600);
     setTimeout(() => {
       endStickersShown = 2;
-      chatEl.insertBefore(buildStickerWrap(STICKER_END_2), typingEl);
+      chatEl.insertBefore(buildTextWrap('I made you a little canvas to sketch on! ✨'), typingEl);
       scrollBottom();
       playDing();
     }, 3000);
@@ -771,8 +757,12 @@ function revealHeartfelt() {
       scrollBottom();
       playDing();
       revealHeaderIcon('hdr-draw-icon');
-      // Dress-up appears after drawing card
-      setTimeout(showDressUpGame, DINO_DELAY_MS);
+      // Dress-up warning message and game
+      setTimeout(() => {
+        appendTypedBubble('Since I have been your fashion expert its only right that I include a dress up game. 💅👗', 1200, () => {
+          setTimeout(showDressUpGame, 1000);
+        });
+      }, DINO_DELAY_MS);
     }, 4500);
   }, 1800);
 }
