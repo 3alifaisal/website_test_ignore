@@ -9,15 +9,15 @@
   --wa-bg:          #0b141a;
   --wa-header-bg:   #1f2c34;
   --wa-received:    #202c33;
-  --wa-sent:        #005c4b;
+  --wa-sent:        #701a3c;
   --wa-text:        #e9edef;
   --wa-text-dim:    #8696a0;
-  --wa-green:       #00a884;
-  --wa-green-light: #25d366;
+  --wa-green:       #ec4899;
+  --wa-green-light: #f472b6;
   --wa-border:      #2a3942;
   --wa-time:        #8696a0;
   /* Party palette (reused for special messages) */
-  --primary:   #ff4fa3;
+  --primary:   #ec4899;
   --secondary: #ffe94f;
   --accent:    #4ff0ff;
   /* Layout helpers */

@@ -136,7 +136,7 @@ function showToast(msg) {
 // ==================== MESSAGE TEMPLATES ====================
 function mkDrawingHTML() {
   return `<span class="chess-card-board">🎨 🖌️ ✨ 🌈 💕 🖼️</span>
-    <strong style="display:block;margin:0.35rem 0 0.65rem;">a canvas for your creativity bestie 🎨</strong>
+    <strong style="display:block;margin:0.35rem 0 0.65rem;">a canvas for your creativity 🎨</strong>
     <a href="drawing.html" class="chat-card-btn chess-btn">🎨 Open Drawing Studio</a>`;
 }
 
@@ -193,9 +193,8 @@ const SCRIPT = [
   { type:'delay', ms: 1000 },
 
   // ---- Phase 1: calm intro (auto-play) ----
-  { type:'msg', text:'Since you know me so well bestie',                                                           typing: 850  },
-  { type:'msg', text:'You probably already guessed your birthday present is this website bahan 😂',                   typing: 1600 },
-  { type:'msg', text:'bet you didnt think it would be an actual whatsapp chat tho 😂',                typing: 1250 },
+  { type:'msg', text:'Since we\'ve known each other so long, you know I\'m always busy schooling you on fashion...', typing: 1400 },
+  { type:'msg', text:'But I wanted to build a little digital space just for you to have fun today! 🎨👗', typing: 1600 },
 
   { type:'gate', label:'Tap to open 📩' },
 
@@ -667,7 +666,7 @@ function appendTypedBubble(text, typingMs, onDone) {
 // intro messages have already been pre-rendered.
 function revealPostStep2() {
   setTimeout(() => {
-    appendTypedBubble('but wait bestie theres more? 👀', 700, () => {
+    appendTypedBubble('but wait, there\'s more? 👀', 700, () => {
       setTimeout(() => {
         appendTypedBubble('open this bahan! 💌', 800, () => {
           setTimeout(() => {
@@ -705,8 +704,8 @@ function restorePostIntroAndContinue() {
     wrap.appendChild(bubble);
     chatEl.insertBefore(wrap, typingEl);
   }
-  addStaticBubble('omg bestie look out! 😱');
-  addStaticBubble('here comes the plane bestie ✈️');
+  addStaticBubble('omg look out! 😱');
+  addStaticBubble('here comes the plane ✈️');
   addStaticBubble('try and catch it bahan 😄');
   scrollBottom();
   revealPostStep2();
@@ -714,9 +713,9 @@ function restorePostIntroAndContinue() {
 
 function revealPostSequence() {
   // Step 1: three intro messages, then launch the plane
-  appendTypedBubble('omg bestie look out! 😱', 1000, () => {
+  appendTypedBubble('omg look out! 😱', 1000, () => {
     setTimeout(() => {
-      appendTypedBubble('here comes the plane bestie ✈️', 800, () => {
+      appendTypedBubble('here comes the plane ✈️', 800, () => {
         setTimeout(() => {
           appendTypedBubble('try and catch it bahan 😄', 600, () => {
             postIntroShown = true;
@@ -878,7 +877,7 @@ function showDressUpGame() {
   // Build dress-up UI inside the overlay
   overlay.innerHTML = `
     <div style="display:flex;flex-direction:column;align-items:center;height:100%;padding:0.5rem 1rem;gap:0.4rem;pointer-events:all;">
-      <div style="font-size:0.8rem;color:#00a884;font-weight:700;text-align:center;">👗 Dress Up Game — tap items to style!</div>
+      <div style="font-size:0.8rem;color:#ec4899;font-weight:700;text-align:center;">👗 Dress Up Game — tap items to style!</div>
       <div style="display:flex;align-items:flex-end;justify-content:center;gap:0.5rem;flex:1;min-height:0;">
         <div id="dress-char" style="position:relative;font-size:3.5rem;line-height:1;text-align:center;filter:drop-shadow(0 2px 12px rgba(255,79,163,0.5));">
           <div id="dress-acc" style="position:absolute;top:-0.6em;left:50%;transform:translateX(-50%);font-size:1.2rem;min-height:1.4rem;"></div>
@@ -902,7 +901,7 @@ function showDressUpGame() {
         <button class="dress-btn" data-slot="shoes" data-item="👟" style="font-size:1.3rem;background:#1f2c34;border:1px solid #2a3942;border-radius:8px;padding:0.25rem 0.45rem;cursor:pointer;transition:all 0.15s;">👟</button>
         <button class="dress-btn" data-slot="shoes" data-item="👢" style="font-size:1.3rem;background:#1f2c34;border:1px solid #2a3942;border-radius:8px;padding:0.25rem 0.45rem;cursor:pointer;transition:all 0.15s;">👢</button>
         <button class="dress-btn" data-slot="shoes" data-item="👡" style="font-size:1.3rem;background:#1f2c34;border:1px solid #2a3942;border-radius:8px;padding:0.25rem 0.45rem;cursor:pointer;transition:all 0.15s;">👡</button>
-        <button id="dress-random" style="font-size:0.85rem;background:#00a884;border:none;border-radius:8px;padding:0.25rem 0.65rem;cursor:pointer;color:#fff;font-weight:700;transition:all 0.15s;">✨ Random!</button>
+        <button id="dress-random" style="font-size:0.85rem;background:#ec4899;border:none;border-radius:8px;padding:0.25rem 0.65rem;cursor:pointer;color:#fff;font-weight:700;transition:all 0.15s;">✨ Random!</button>
       </div>
     </div>
   `;
@@ -924,8 +923,8 @@ function showDressUpGame() {
         b.style.borderColor = '#2a3942';
         b.style.background = '#1f2c34';
       });
-      btn.style.borderColor = '#00a884';
-      btn.style.background = 'rgba(0,168,132,0.2)';
+      btn.style.borderColor = '#ec4899';
+      btn.style.background = 'rgba(236,72,153,0.2)';
       playPop();
     });
   });
