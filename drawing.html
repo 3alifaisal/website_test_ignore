@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🎨 Drawing Studio — Athena's Birthday</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0b141a;
+      color: #e9edef;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 60px;
+      padding-bottom: 120px;
+      overflow-x: hidden;
+    }
+
+    /* ── WA Header ───────────────────────────────────── */
+    .wa-header {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; gap: 12px;
+      background: #1f2c34; padding: 10px 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.45);
+    }
+    .wa-header .back { font-size: 22px; color: #00a884; text-decoration: none; }
+    .wa-header .avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: linear-gradient(135deg, #ff6b9d, #c44dff);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; flex-shrink: 0;
+    }
+    .wa-header .info { display: flex; flex-direction: column; }
+    .wa-header .info .name { font-size: 16px; font-weight: 600; color: #e9edef; }
+    .wa-header .info .status { font-size: 12px; color: #00a884; }
+
+    /* ── Page Content ────────────────────────────────── */
+    .page-wrap {
+      width: 100%; max-width: 760px;
+      padding: 24px 16px;
+      display: flex; flex-direction: column; align-items: center; gap: 20px;
+    }
+
+    h1 {
+      font-size: clamp(22px, 5vw, 30px);
+      text-align: center;
+      background: linear-gradient(90deg, #ff6b9d, #c44dff, #00a884);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .subtitle {
+      text-align: center; font-size: 15px; color: #8696a0;
+      margin-top: -8px;
+    }
+
+    /* ── Canvas ───────────────────────────────────────── */
+    .canvas-wrap {
+      width: 100%; max-width: 700px;
+      border-radius: 16px;
+      box-shadow: 0 0 0 3px #2a3942, 0 0 0 5px #00a884, 0 8px 32px rgba(0,168,132,.15);
+      overflow: hidden;
+      position: relative;
+      background: #fff;
+      touch-action: none;
+    }
+    canvas {
+      display: block; width: 100%; height: auto;
+      cursor: crosshair;
+    }
+
+    /* ── Toolbar ──────────────────────────────────────── */
+    .toolbar {
+      width: 100%; max-width: 700px;
+      display: flex; flex-direction: column; gap: 14px;
+    }
+    .tool-row {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 8px;
+    }
+    .tool-row-label {
+      font-size: 12px; text-transform: uppercase; letter-spacing: 1px;
+      color: #8696a0; width: 100%; margin-bottom: -4px;
+    }
+
+    .tool-btn {
+      background: #1f2c34; border: 2px solid #2a3942;
+      color: #e9edef; padding: 8px 14px; border-radius: 10px;
+      font-size: 13px; font-family: inherit; cursor: pointer;
+      transition: all .2s ease; user-select: none;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .tool-btn:hover { border-color: #3a4a54; background: #263640; transform: translateY(-1px); }
+    .tool-btn.active { border-color: #00a884; box-shadow: 0 0 8px rgba(0,168,132,.35); }
+
+    /* Brush preview dot inside size buttons */
+    .brush-dot {
+      display: inline-block; border-radius: 50%; background: #e9edef;
+      flex-shrink: 0;
+    }
+
+    /* Color swatches */
+    .color-swatch {
+      width: 32px; height: 32px; border-radius: 8px;
+      border: 2px solid #2a3942; cursor: pointer;
+      transition: all .2s ease; flex-shrink: 0;
+    }
+    .color-swatch:hover { transform: scale(1.15); }
+    .color-swatch.active {
+      border-color: #00a884;
+      box-shadow: 0 0 8px rgba(0,168,132,.5);
+      transform: scale(1.15);
+    }
+
+    /* Rainbow toggle */
+    .rainbow-btn {
+      background: linear-gradient(135deg, #ff0000, #ff8800, #ffff00, #00ff00, #0088ff, #8800ff);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+    }
+    .tool-btn.rainbow-active {
+      border-color: #00a884;
+      box-shadow: 0 0 12px rgba(0,168,132,.4), 0 0 20px rgba(200,80,200,.2);
+      background: linear-gradient(135deg, #1f2c34, #2a1a30);
+    }
+
+    /* Action row */
+    .action-row { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    /* ── Bottom Buttons ──────────────────────────────── */
+    .bottom-btns {
+      display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
+      margin-top: 12px;
+    }
+    .ghost-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 10px 22px; border-radius: 10px;
+      font-family: inherit; font-size: 14px; cursor: pointer;
+      text-decoration: none; transition: all .25s ease;
+      background: transparent; border: 1.5px solid #2a3942; color: #8696a0;
+    }
+    .ghost-btn:hover { border-color: #00a884; color: #00a884; transform: translateY(-1px); }
+
+    /* ── Spotify Float ───────────────────────────────── */
+    #spotify-float {
+      position: fixed; bottom: 18px; right: 18px; z-index: 90;
+      width: 320px; border-radius: 14px; overflow: hidden;
+      box-shadow: 0 4px 24px rgba(0,0,0,.5);
+      animation: spotify-ombre 6s ease-in-out infinite alternate;
+    }
+    #spotify-float iframe {
+      width: 100%; height: 80px; border: none;
+    }
+    @keyframes spotify-ombre {
+      0%   { box-shadow: 0 0 18px 2px #1db954, 0 4px 24px rgba(0,0,0,.5); }
+      33%  { box-shadow: 0 0 18px 2px #c44dff, 0 4px 24px rgba(0,0,0,.5); }
+      66%  { box-shadow: 0 0 18px 2px #ff6b9d, 0 4px 24px rgba(0,0,0,.5); }
+      100% { box-shadow: 0 0 18px 2px #1db954, 0 4px 24px rgba(0,0,0,.5); }
+    }
+
+    /* ── Responsive ──────────────────────────────────── */
+    @media (max-width: 480px) {
+      .tool-btn { padding: 7px 10px; font-size: 12px; }
+      .color-swatch { width: 28px; height: 28px; }
+      #spotify-float { width: 260px; right: 10px; bottom: 10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- WA Header -->
+  <div class="wa-header">
+    <a class="back" href="index.html">‹</a>
+    <div class="avatar">💖</div>
+    <div class="info">
+      <span class="name">Bestie 💕</span>
+      <span class="status">online</span>
+    </div>
+  </div>
+
+  <div class="page-wrap">
+    <h1>🎨 Birthday Drawing Studio!</h1>
+    <p class="subtitle">Draw something cute for the birthday girl bestie 💕</p>
+
+    <!-- Toolbar -->
+    <div class="toolbar">
+
+      <!-- Brush Sizes -->
+      <div class="tool-row">
+        <span class="tool-row-label">Brush Size</span>
+        <button class="tool-btn active" data-size="2" onclick="setBrush(2, this)">
+          <span class="brush-dot" style="width:4px;height:4px"></span> Small
+        </button>
+        <button class="tool-btn" data-size="5" onclick="setBrush(5, this)">
+          <span class="brush-dot" style="width:8px;height:8px"></span> Medium
+        </button>
+        <button class="tool-btn" data-size="10" onclick="setBrush(10, this)">
+          <span class="brush-dot" style="width:14px;height:14px"></span> Large
+        </button>
+        <button class="tool-btn" data-size="20" onclick="setBrush(20, this)">
+          <span class="brush-dot" style="width:20px;height:20px"></span> XL
+        </button>
+      </div>
+
+      <!-- Colors -->
+      <div class="tool-row" id="color-row">
+        <span class="tool-row-label">Colors</span>
+        <!-- generated by JS -->
+      </div>
+
+      <!-- Tools -->
+      <div class="tool-row">
+        <span class="tool-row-label">Tools</span>
+        <button class="tool-btn" id="rainbow-btn" onclick="toggleRainbow()">
+          <span class="rainbow-btn">🌈 Rainbow</span>
+        </button>
+        <button class="tool-btn" id="eraser-btn" onclick="toggleEraser()">
+          🧽 Eraser
+        </button>
+      </div>
+
+      <!-- Actions -->
+      <div class="tool-row action-row">
+        <span class="tool-row-label">Actions</span>
+        <button class="tool-btn" onclick="undo()">↩️ Undo</button>
+        <button class="tool-btn" onclick="clearCanvas()">🗑️ Clear</button>
+        <button class="tool-btn" onclick="saveCanvas()">💾 Save PNG</button>
+      </div>
+    </div>
+
+    <!-- Canvas -->
+    <div class="canvas-wrap">
+      <canvas id="draw-canvas" width="1400" height="900"></canvas>
+    </div>
+
+    <!-- Bottom Buttons -->
+    <div class="bottom-btns">
+      <a class="ghost-btn" href="index.html">‹ Back to chat</a>
+      <a class="ghost-btn" href="map.html">🗺️ Map</a>
+    </div>
+  </div>
+
+  <!-- Spotify Mini-Player -->
+  <div id="spotify-float">
+    <iframe
+      src="https://open.spotify.com/embed/playlist/37i9dQZF1EJL0nCr2gacn4?utm_source=generator&autoplay=1"
+      allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+      allowfullscreen
+      title="Birthday playlist">
+    </iframe>
+  </div>
+
+  <script>
+    /* ── State ──────────────────────────────────────── */
+    const canvas  = document.getElementById('draw-canvas');
+    const ctx     = canvas.getContext('2d');
+    let drawing   = false;
+    let brushSize = 2;
+    let brushColor = '#000000';
+    let rainbowOn  = false;
+    let eraserOn   = false;
+    let hue        = 0;
+    let lastX, lastY;
+
+    const undoStack = [];
+    const MAX_UNDO  = 20;
+
+    /* ── Colors ────────────────────────────────────── */
+    const COLORS = [
+      '#000000', '#ffffff', '#ff4d6d', '#ff6b9d', '#c44dff',
+      '#8b5cf6', '#3b82f6', '#06b6d4', '#00a884', '#10b981',
+      '#facc15', '#f59e0b', '#ef4444', '#f97316', '#ec4899',
+      '#a855f7',
+    ];
+
+    const colorRow = document.getElementById('color-row');
+    COLORS.forEach((c, i) => {
+      const el = document.createElement('div');
+      el.className = 'color-swatch' + (i === 0 ? ' active' : '');
+      el.style.background = c;
+      if (c === '#ffffff') el.style.border = '2px solid #3a4a54';
+      el.addEventListener('click', () => setColor(c, el));
+      colorRow.appendChild(el);
+    });
+
+    /* ── Init canvas ───────────────────────────────── */
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    saveState(); // initial blank state
+
+    /* ── Helpers ────────────────────────────────────── */
+    function saveState() {
+      if (undoStack.length >= MAX_UNDO) undoStack.shift();
+      undoStack.push(canvas.toDataURL());
+    }
+
+    function undo() {
+      if (undoStack.length <= 1) return; // keep at least initial
+      undoStack.pop(); // discard current
+      const img = new Image();
+      img.onload = () => { ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.drawImage(img, 0, 0); };
+      img.src = undoStack[undoStack.length - 1];
+    }
+
+    function clearCanvas() {
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      saveState();
+    }
+
+    function saveCanvas() {
+      const a = document.createElement('a');
+      a.download = 'athena-birthday-drawing.png';
+      a.href = canvas.toDataURL('image/png');
+      a.click();
+    }
+
+    function setBrush(size, el) {
+      brushSize = size;
+      document.querySelectorAll('[data-size]').forEach(b => b.classList.remove('active'));
+      el.classList.add('active');
+      if (eraserOn) toggleEraser();
+    }
+
+    function setColor(c, el) {
+      brushColor = c;
+      document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('active'));
+      el.classList.add('active');
+      if (eraserOn) toggleEraser();
+      if (rainbowOn) toggleRainbow();
+    }
+
+    function toggleRainbow() {
+      rainbowOn = !rainbowOn;
+      document.getElementById('rainbow-btn').classList.toggle('rainbow-active', rainbowOn);
+      if (rainbowOn && eraserOn) toggleEraser();
+    }
+
+    function toggleEraser() {
+      eraserOn = !eraserOn;
+      document.getElementById('eraser-btn').classList.toggle('active', eraserOn);
+      canvas.style.cursor = eraserOn ? 'cell' : 'crosshair';
+      if (eraserOn && rainbowOn) toggleRainbow();
+    }
+
+    /* ── Coordinate helpers (handle CSS scaling) ──── */
+    function getPos(e) {
+      const rect = canvas.getBoundingClientRect();
+      const scaleX = canvas.width  / rect.width;
+      const scaleY = canvas.height / rect.height;
+      let clientX, clientY;
+      if (e.touches) {
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
+      } else {
+        clientX = e.clientX;
+        clientY = e.clientY;
+      }
+      return {
+        x: (clientX - rect.left) * scaleX,
+        y: (clientY - rect.top)  * scaleY,
+      };
+    }
+
+    /* ── Drawing ───────────────────────────────────── */
+    function startDraw(e) {
+      e.preventDefault();
+      drawing = true;
+      const p = getPos(e);
+      lastX = p.x;
+      lastY = p.y;
+
+      // Draw a dot for single clicks
+      ctx.beginPath();
+      ctx.arc(lastX, lastY, (eraserOn ? brushSize * 2 : brushSize) / 2, 0, Math.PI * 2);
+      ctx.fillStyle = eraserOn ? '#ffffff' : (rainbowOn ? `hsl(${hue}, 100%, 50%)` : brushColor);
+      ctx.fill();
+    }
+
+    function draw(e) {
+      if (!drawing) return;
+      e.preventDefault();
+      const p = getPos(e);
+
+      ctx.beginPath();
+      ctx.moveTo(lastX, lastY);
+      ctx.lineTo(p.x, p.y);
+      ctx.lineWidth = eraserOn ? brushSize * 2 : brushSize;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+
+      if (eraserOn) {
+        ctx.strokeStyle = '#ffffff';
+      } else if (rainbowOn) {
+        ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+        hue = (hue + 2) % 360;
+      } else {
+        ctx.strokeStyle = brushColor;
+      }
+
+      ctx.stroke();
+      lastX = p.x;
+      lastY = p.y;
+    }
+
+    function endDraw(e) {
+      if (!drawing) return;
+      drawing = false;
+      saveState();
+    }
+
+    /* Mouse events */
+    canvas.addEventListener('mousedown',  startDraw);
+    canvas.addEventListener('mousemove',  draw);
+    canvas.addEventListener('mouseup',    endDraw);
+    canvas.addEventListener('mouseleave', endDraw);
+
+    /* Touch events */
+    canvas.addEventListener('touchstart', startDraw, { passive: false });
+    canvas.addEventListener('touchmove',  draw,      { passive: false });
+    canvas.addEventListener('touchend',   endDraw);
+    canvas.addEventListener('touchcancel', endDraw);
+
+    /* Prevent scrolling while drawing on mobile */
+    document.body.addEventListener('touchmove', e => {
+      if (drawing) e.preventDefault();
+    }, { passive: false });
+  </script>
+</body>
+</html>

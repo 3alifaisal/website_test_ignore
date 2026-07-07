@@ -248,7 +248,7 @@ body {
   border: none;
 }
 
-/* ==================== DINO GAME OVERLAY ==================== */
+/* ==================== DRESS-UP GAME OVERLAY ==================== */
 #dino-overlay {
   position: fixed;
   bottom: 0;
@@ -270,7 +270,7 @@ body {
   touch-action: none;
 }
 
-/* Give the chat window bottom breathing room when the dino is active */
+/* Give the chat window bottom breathing room when the dress-up game is active */
 #chat-window.dino-active {
   padding-bottom: 228px;
 }
@@ -446,7 +446,7 @@ body {
 }
 .chat-plane:hover { transform: scale(1.18) rotate(-12deg); }
 
-/* ---- Chess card ---- */
+/* ---- Drawing card ---- */
 .wa-bubble.chess-bubble {
   background: linear-gradient(135deg, rgba(0,92,75,0.75), rgba(0,72,90,0.75));
   border: 1px solid rgba(0,168,132,0.35);

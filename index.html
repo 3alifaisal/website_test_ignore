@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>💬 Message for Ali</title>
+  <title>💬 Message for Athena</title>
   <link rel="stylesheet" href="style.css" />
   <!-- Preload sticker images so they appear instantly when chat reaches them -->
   <link rel="preload" as="image" href="https://github.com/user-attachments/assets/847194f1-748a-4dfa-9ca0-f5328ce6ecf7" />
@@ -28,9 +28,9 @@
     <!-- Chat header -->
     <header id="wa-header">
       <div class="wa-header-left">
-        <div class="wa-avatar">💙</div>
+        <div class="wa-avatar">💖</div>
         <div class="wa-header-info">
-          <div class="wa-header-name">Cестрëнка</div>
+          <div class="wa-header-name">Bestie 💕</div>
           <div id="wa-header-status" class="wa-header-status">online</div>
         </div>
       </div>
@@ -40,14 +40,14 @@
         <a href="https://discord.com" target="_blank" rel="noopener noreferrer"
            class="wa-header-icon-link" aria-label="Call / Discord">📞</a>
         <!-- Unlock icons — revealed progressively as the chat advances -->
-        <a id="hdr-map-icon"   href="map.html"   hidden class="wa-header-icon-link header-unlock-icon" aria-label="Map">✈️</a>
-        <a id="hdr-chess-icon" href="chess.html" hidden class="wa-header-icon-link header-unlock-icon" aria-label="Chess">♟️</a>
-        <span id="hdr-dino-icon" hidden class="wa-header-icon-link header-unlock-icon" style="cursor:pointer" aria-label="Dino game">🦕</span>
+        <a id="hdr-map-icon"   href="map.html"     hidden class="wa-header-icon-link header-unlock-icon" aria-label="Map">✈️</a>
+        <a id="hdr-draw-icon"  href="drawing.html" hidden class="wa-header-icon-link header-unlock-icon" aria-label="Drawing">🎨</a>
+        <span id="hdr-dress-icon" hidden class="wa-header-icon-link header-unlock-icon" style="cursor:pointer" aria-label="Dress-up game">👗</span>
         <button id="wa-menu-btn" aria-label="Menu" aria-haspopup="true" aria-expanded="false">⋮</button>
         <!-- Dropdown sits inside .wa-header-icons for relative positioning -->
         <div id="wa-menu-dropdown" hidden role="menu">
           <a href="map.html" role="menuitem" class="wa-menu-item">🗺️ Map</a>
-          <a href="chess.html" role="menuitem" class="wa-menu-item">♟️ Chess Game</a>
+          <a href="drawing.html" role="menuitem" class="wa-menu-item">🎨 Drawing Studio</a>
         </div>
       </div>
     </header>
@@ -94,14 +94,14 @@
   <!-- Spotify floating mini-player (top-right, ombre border) -->
   <div id="spotify-float">
     <iframe
-      src="https://open.spotify.com/embed/album/76V9WMm2cXFd2UPntSGV7A?utm_source=generator&autoplay=1"
+      src="https://open.spotify.com/embed/playlist/37i9dQZF1EJL0nCr2gacn4?utm_source=generator&autoplay=1"
       allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
       allowfullscreen
-      title="French music">
+      title="Birthday playlist">
     </iframe>
   </div>
 
-  <!-- Dino game — walks in from right after all messages are done -->
+  <!-- Dress-up game — appears after all messages are done -->
   <div id="dino-overlay" hidden>
     <canvas id="dino-canvas"></canvas>
   </div>

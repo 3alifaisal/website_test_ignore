@@ -152,14 +152,14 @@ function mkStickerHTML(url) {
 }
 
 // ==================== MESSAGE TEMPLATES ====================
-function mkChessHTML() {
-  return `<span class="chess-card-board">♟ ♔ ♛ ♜ ♝ ♞</span>
-    <strong style="display:block;margin:0.35rem 0 0.65rem;">a game for two 🎮</strong>
-    <a href="chess.html" class="chat-card-btn chess-btn">♟️ Open Chess</a>`;
+function mkDrawingHTML() {
+  return `<span class="chess-card-board">🎨 🖌️ ✨ 🌈 💕 🖼️</span>
+    <strong style="display:block;margin:0.35rem 0 0.65rem;">a canvas for your creativity bestie 🎨</strong>
+    <a href="drawing.html" class="chat-card-btn chess-btn">🎨 Open Drawing Studio</a>`;
 }
 
 function mkBirthdayHTML() {
-  return `🎂🎉<br>HAPPY BIRTHDAY,<br>ALI!!<br>🎉🎂`;
+  return `🎂🎉<br>HAPPY BIRTHDAY,<br>ATHENA!!<br>🎉🎂`;
 }
 
 
@@ -173,12 +173,12 @@ function mkChallengeHTML() {
 }
 
 function mkHeartfeltHTML() {
-  return `<p><strong>Dear Ali,</strong></p>
+  return `<p><strong>Dear Athena,</strong></p>
     <p>we got to know each other in krakow, that was 6 years ago, crazy how time flies. I have had the pleasure of being your best friend for all these years, and I would wish for many many more to come, filled with health, hope, learning and luck, and many many shenanigans.</p>
-    <p>Unlike the delivery of this website i hope that life gives you its sweetest fruits and rewards in the right time. I have watched you grow through many things (relationships, freindships, work, war and now most recently schooling again), change with the times (how you approach problems, how you assert your presence, how you talk and how serious your approach to life is), for the better (im proud of you), youve been a solid pillar of support in my life, and i imagine in the lives of the people around you as well.</p>
-    <p>Let this year hold the mightiest bench press numbers, the highest grades and the craziest most heartwarming stories of your youth, lets grow together as people and as honorary family for you are my brother and i dont know what i would have done without you and your motivating strength, sarcastic inputs and tollerance for my horrible sense of humor.</p>
-    <p>Youre the bestiestest freind a girl could ask for and I hope i get to wish you for many, many decades to come,</p>
-    <p class="heartfelt-sig">love, Athena. 💙</p>`;
+    <p>Unlike the delivery of this website i hope that life gives you its sweetest fruits and rewards in the right time. I have watched you grow through many things (relationships, friendships, work, war and now most recently schooling again), change with the times (how you approach problems, how you assert your presence, how you talk and how serious your approach to life is), for the better (im proud of you bahan), youve been a solid pillar of support in my life, and i imagine in the lives of the people around you as well.</p>
+    <p>Let this year hold the highest grades and the craziest most heartwarming stories of your youth, lets grow together as people and as honorary family for you are my sister and i dont know what i would have done without you and your motivating strength, sarcastic inputs and tolerance for my horrible sense of humor.</p>
+    <p>Youre the bestiestest friend a guy could ask for and I hope i get to wish you for many, many decades to come,</p>
+    <p class="heartfelt-sig">love, Ali. 💖</p>`;
 }
 
 function mkPostBubbleHTML() {
@@ -189,8 +189,8 @@ function mkPostBubbleHTML() {
 // ==================== CHALLENGE / DINO CONSTANTS ====================
 // Defined here (before SCRIPT) so mkChallengeHTML() can reference them
 // during SCRIPT array initialization without hitting the TDZ.
-const CHALLENGE_CLICKS = 24; // Ali is turning 24!
-const DINO_DELAY_MS    = 3000; // ms after chess card before dino wanders in
+const CHALLENGE_CLICKS = 24; // Athena is turning 24!
+const DINO_DELAY_MS    = 3000; // ms after drawing card before dress-up appears
 
 // ==================== MESSAGE SCRIPT ====================
 // Each beat is one of:
@@ -207,15 +207,15 @@ const SCRIPT = [
   { type:'delay', ms: 1400 },
 
   // ---- Phase 1: calm intro (auto-play) ----
-  { type:'msg', text:'Since you are unable to stop reading my mind',                                                           typing: 850  },
-  { type:'msg', text:'You somehow already guessed that your birthday present is this website',                   typing: 1600 },
-  { type:'msg', text:'bet you didnt think it would be an actual whatsapp message 😂',                typing: 1250 },
+  { type:'msg', text:'Since you know me so well bestie',                                                           typing: 850  },
+  { type:'msg', text:'You probably already guessed your birthday present is this website bahan 😂',                   typing: 1600 },
+  { type:'msg', text:'bet you didnt think it would be an actual whatsapp chat tho 😂',                typing: 1250 },
   { type:'msg', bubbleClass:'sticker-bubble', html:mkStickerHTML(STICKER_AFTER_BET),                 typing: 800  },
 
   { type:'gate', label:'Tap to open 📩' },
 
   // ---- Phase 2: candle challenge ----
-  { type:'msg', text:'now light your candles 🕯️',                                                   typing: 900  },
+  { type:'msg', text:'now light your candles bestie 🕯️',                                                   typing: 900  },
   { type:'msg', bubbleClass:'challenge-bubble', html:mkChallengeHTML(),                              typing:1500 },
 ];
 
@@ -465,7 +465,7 @@ function saveState() {
 
 // Intercept clicks on outbound links so state is saved before navigating away
 document.addEventListener('click', (e) => {
-  const link = e.target.closest('a[href="map.html"], a[href="chess.html"]');
+  const link = e.target.closest('a[href="map.html"], a[href="drawing.html"]');
   if (!link) return;
   saveState();
 }, true); // capture phase so it fires before any stopPropagation
@@ -522,12 +522,12 @@ function buildStickerWrap(url) {
   return wrap;
 }
 
-function buildChessWrap() {
+function buildDrawingWrap() {
   const wrap   = document.createElement('div');
   wrap.className = 'wa-msg received';
   const bubble = document.createElement('div');
   bubble.className = 'wa-bubble chess-bubble';
-  bubble.innerHTML = mkChessHTML(); // mkChessHTML is hardcoded, not user-supplied
+  bubble.innerHTML = mkDrawingHTML(); // mkDrawingHTML is hardcoded, not user-supplied
   const ts = document.createElement('span');
   ts.className   = 'wa-time';
   ts.textContent = getTime();
@@ -582,7 +582,7 @@ function loadState() {
     // Restore end stickers that had appeared after the heartfelt
     if (endStickersShown >= 1) chatEl.insertBefore(buildStickerWrap(STICKER_END_1), typingEl);
     if (endStickersShown >= 2) chatEl.insertBefore(buildStickerWrap(STICKER_END_2), typingEl);
-    if (endStickersShown >= 3) chatEl.insertBefore(buildChessWrap(), typingEl);
+    if (endStickersShown >= 3) chatEl.insertBefore(buildDrawingWrap(), typingEl);
   }
 
   requestAnimationFrame(() => chatEl.classList.remove('restore-mode'));
@@ -593,7 +593,7 @@ function loadState() {
   }
 
   // Restore header unlock icons
-  if (endStickersShown >= 3) revealHeaderIcon('hdr-chess-icon');
+  if (endStickersShown >= 3) revealHeaderIcon('hdr-draw-icon');
 
   if (s.gateOpen && s.gateLabel) {
     setGate(s.gateLabel);
@@ -681,9 +681,9 @@ function appendTypedBubble(text, typingMs, onDone) {
 // intro messages have already been pre-rendered.
 function revealPostStep2() {
   setTimeout(() => {
-    appendTypedBubble('but wait theres more? 👀', 700, () => {
+    appendTypedBubble('but wait bestie theres more? 👀', 700, () => {
       setTimeout(() => {
-        appendTypedBubble('open this! 💌', 800, () => {
+        appendTypedBubble('open this bahan! 💌', 800, () => {
           setTimeout(() => {
             const postWrap = buildPostBubbleWrap();
             chatEl.insertBefore(postWrap, typingEl);
@@ -719,20 +719,20 @@ function restorePostIntroAndContinue() {
     wrap.appendChild(bubble);
     chatEl.insertBefore(wrap, typingEl);
   }
-  addStaticBubble('oh no look out! 😱');
-  addStaticBubble('here comes the airoplane ✈️');
-  addStaticBubble('try and catch it 😄');
+  addStaticBubble('omg bestie look out! 😱');
+  addStaticBubble('here comes the plane bestie ✈️');
+  addStaticBubble('try and catch it bahan 😄');
   scrollBottom();
   revealPostStep2();
 }
 
 function revealPostSequence() {
   // Step 1: three intro messages, then launch the plane
-  appendTypedBubble('oh no look out! 😱', 1000, () => {
+  appendTypedBubble('omg bestie look out! 😱', 1000, () => {
     setTimeout(() => {
-      appendTypedBubble('here comes the airoplane ✈️', 800, () => {
+      appendTypedBubble('here comes the plane bestie ✈️', 800, () => {
         setTimeout(() => {
-          appendTypedBubble('try and catch it 😄', 600, () => {
+          appendTypedBubble('try and catch it bahan 😄', 600, () => {
             postIntroShown = true;
             launchFlyingPlane(revealPostStep2);
           });
@@ -767,12 +767,12 @@ function revealHeartfelt() {
     }, 3000);
     setTimeout(() => {
       endStickersShown = 3;
-      chatEl.insertBefore(buildChessWrap(), typingEl);
+      chatEl.insertBefore(buildDrawingWrap(), typingEl);
       scrollBottom();
       playDing();
-      revealHeaderIcon('hdr-chess-icon');
-      // Dino wanders in after chess
-      setTimeout(showDinoGame, DINO_DELAY_MS);
+      revealHeaderIcon('hdr-draw-icon');
+      // Dress-up appears after drawing card
+      setTimeout(showDressUpGame, DINO_DELAY_MS);
     }, 4500);
   }, 1800);
 }
@@ -822,10 +822,10 @@ document.addEventListener('DOMContentLoaded', () => {
   clearGate();
   runLoadingBar();
 
-  // ---- Dino header icon — click to show dino game ----
-  const dinoIcon = document.getElementById('hdr-dino-icon');
-  if (dinoIcon) {
-    dinoIcon.addEventListener('click', showDinoGame);
+  // ---- Dress-up header icon — click to show dress-up game ----
+  const dressIcon = document.getElementById('hdr-dress-icon');
+  if (dressIcon) {
+    dressIcon.addEventListener('click', showDressUpGame);
   }
 
   // ---- Hamburger menu ----
@@ -863,520 +863,101 @@ window.addEventListener('pageshow', (e) => {
   }
 });
 
-// ==================== DINO GAME ====================
-// Phases: 'intro' (walk-in) → 'idle' (tap to start) → 'playing' → 'dead'
-let dinoGameStarted = false;
+// ==================== DRESS-UP GAME ====================
+let dressUpStarted = false;
 
-function showDinoGame() {
-  if (dinoGameStarted) return;
-  dinoGameStarted = true;
+function showDressUpGame() {
+  if (dressUpStarted) return;
+  dressUpStarted = true;
 
   const overlay = document.getElementById('dino-overlay');
   const canvas  = document.getElementById('dino-canvas');
-  if (!overlay || !canvas) return;
+  if (!overlay) return;
+  if (canvas) canvas.style.display = 'none';
 
   overlay.removeAttribute('hidden');
   overlay.classList.add('active');
 
-  // Push chat window up so the last message (chess card) scrolls above the overlay
   const chatWin = document.getElementById('chat-window');
   if (chatWin) {
     chatWin.classList.add('dino-active');
     scrollBottom();
   }
-  revealHeaderIcon('hdr-dino-icon');
+  revealHeaderIcon('hdr-dress-icon');
 
-  // Size canvas to device pixels
-  function resize() {
-    canvas.width  = canvas.offsetWidth  * (window.devicePixelRatio || 1);
-    canvas.height = canvas.offsetHeight * (window.devicePixelRatio || 1);
-  }
-  resize();
-  window.addEventListener('resize', resize);
+  // Build dress-up UI inside the overlay
+  overlay.innerHTML = `
+    <div style="display:flex;flex-direction:column;align-items:center;height:100%;padding:0.5rem 1rem;gap:0.4rem;pointer-events:all;">
+      <div style="font-size:0.8rem;color:#00a884;font-weight:700;text-align:center;">👗 Dress Up Game — tap items to style!</div>
+      <div style="display:flex;align-items:flex-end;justify-content:center;gap:0.5rem;flex:1;min-height:0;">
+        <div id="dress-char" style="position:relative;font-size:3.5rem;line-height:1;text-align:center;filter:drop-shadow(0 2px 12px rgba(255,79,163,0.5));">
+          <div id="dress-acc" style="position:absolute;top:-0.6em;left:50%;transform:translateX(-50%);font-size:1.2rem;min-height:1.4rem;"></div>
+          <div>🧑‍🦰</div>
+          <div id="dress-outfit" style="font-size:2rem;min-height:2.2rem;">👚</div>
+          <div id="dress-shoes" style="font-size:1.2rem;min-height:1.4rem;">👟</div>
+        </div>
+      </div>
+      <div id="dress-items" style="display:flex;flex-wrap:wrap;justify-content:center;gap:0.3rem;max-width:500px;">
+        <button class="dress-btn" data-slot="outfit" data-item="👚" style="font-size:1.3rem;background:#1f2c34;border:1px solid #2a3942;border-radius:8px;padding:0.25rem 0.45rem;cursor:pointer;transition:all 0.15s;">👚</button>
+        <button class="dress-btn" data-slot="outfit" data-item="👗" style="font-size:1.3rem;background:#1f2c34;border:1px solid #2a3942;border-radius:8px;padding:0.25rem 0.45rem;cursor:pointer;transition:all 0.15s;">👗</button>
+        <button class="dress-btn" data-slot="outfit" data-item="🎽" style="font-size:1.3rem;background:#1f2c34;border:1px solid #2a3942;border-radius:8px;padding:0.25rem 0.45rem;cursor:pointer;transition:all 0.15s;">🎽</button>
+        <button class="dress-btn" data-slot="outfit" data-item="👘" style="font-size:1.3rem;background:#1f2c34;border:1px solid #2a3942;border-radius:8px;padding:0.25rem 0.45rem;cursor:pointer;transition:all 0.15s;">👘</button>
+        <button class="dress-btn" data-slot="outfit" data-item="💃" style="font-size:1.3rem;background:#1f2c34;border:1px solid #2a3942;border-radius:8px;padding:0.25rem 0.45rem;cursor:pointer;transition:all 0.15s;">💃</button>
+        <button class="dress-btn" data-slot="acc" data-item="👑" style="font-size:1.3rem;background:#1f2c34;border:1px solid #2a3942;border-radius:8px;padding:0.25rem 0.45rem;cursor:pointer;transition:all 0.15s;">👑</button>
+        <button class="dress-btn" data-slot="acc" data-item="🎀" style="font-size:1.3rem;background:#1f2c34;border:1px solid #2a3942;border-radius:8px;padding:0.25rem 0.45rem;cursor:pointer;transition:all 0.15s;">🎀</button>
+        <button class="dress-btn" data-slot="acc" data-item="💍" style="font-size:1.3rem;background:#1f2c34;border:1px solid #2a3942;border-radius:8px;padding:0.25rem 0.45rem;cursor:pointer;transition:all 0.15s;">💍</button>
+        <button class="dress-btn" data-slot="acc" data-item="🕶️" style="font-size:1.3rem;background:#1f2c34;border:1px solid #2a3942;border-radius:8px;padding:0.25rem 0.45rem;cursor:pointer;transition:all 0.15s;">🕶️</button>
+        <button class="dress-btn" data-slot="acc" data-item="🌸" style="font-size:1.3rem;background:#1f2c34;border:1px solid #2a3942;border-radius:8px;padding:0.25rem 0.45rem;cursor:pointer;transition:all 0.15s;">🌸</button>
+        <button class="dress-btn" data-slot="shoes" data-item="👠" style="font-size:1.3rem;background:#1f2c34;border:1px solid #2a3942;border-radius:8px;padding:0.25rem 0.45rem;cursor:pointer;transition:all 0.15s;">👠</button>
+        <button class="dress-btn" data-slot="shoes" data-item="👟" style="font-size:1.3rem;background:#1f2c34;border:1px solid #2a3942;border-radius:8px;padding:0.25rem 0.45rem;cursor:pointer;transition:all 0.15s;">👟</button>
+        <button class="dress-btn" data-slot="shoes" data-item="👢" style="font-size:1.3rem;background:#1f2c34;border:1px solid #2a3942;border-radius:8px;padding:0.25rem 0.45rem;cursor:pointer;transition:all 0.15s;">👢</button>
+        <button class="dress-btn" data-slot="shoes" data-item="👡" style="font-size:1.3rem;background:#1f2c34;border:1px solid #2a3942;border-radius:8px;padding:0.25rem 0.45rem;cursor:pointer;transition:all 0.15s;">👡</button>
+        <button id="dress-random" style="font-size:0.85rem;background:#00a884;border:none;border-radius:8px;padding:0.25rem 0.65rem;cursor:pointer;color:#fff;font-weight:700;transition:all 0.15s;">✨ Random!</button>
+      </div>
+    </div>
+  `;
 
-  const ctx  = canvas.getContext('2d');
-  const DPR  = () => window.devicePixelRatio || 1;
-
-  // ---------- constants ----------
-  const GROUND_RATIO          = 0.72; // fraction of canvas height for ground line
-  const GRAVITY               = 0.55;
-  const JUMP_VEL              = -12.5;
-  const BASE_SPD              = 6;
-  const MAX_SPEED             = 16;
-  const SPEED_INCREASE_INTERVAL = 200; // score ticks between speed bumps
-
-  // Dino dimensions — normal and crouching
-  const DINO_W = 40, DINO_H = 52;
-  const DINO_W_CROUCH = 58, DINO_H_CROUCH = 30;
-
-  // ---------- state ----------
-  let phase     = 'intro'; // intro | idle | playing | dead
-  let frameId   = 0;
-  let score     = 0;
-  let highScore = 0;
-  let speed     = BASE_SPD;
-  let isCrouching = false; // player holding down-arrow / swiping down
-
-  // dino walk sprite (3 leg frames)
-  let dinoX, dinoY, dinoVY = 0, dinoOnGround = true;
-  let legFrame = 0, legTick = 0;
-
-  // cacti
-  let cacti = [];
-  let cactusTimer = 0;
-  let nextCactus  = 90;
-
-  // clouds
-  let clouds = [];
-  let cloudTimer = 0;
-  let nextCloud  = 80;
-
-  // intro: dino starts off-screen right and walks in
-  let introX;
-
-  function groundY() {
-    return Math.floor(canvas.height * GROUND_RATIO);
-  }
-
-  function reset() {
-    dinoY = groundY() - DINO_H;
-    dinoVY = 0;
-    dinoOnGround = true;
-    isCrouching = false;
-    dinoX = Math.floor(canvas.width * 0.12);
-    cacti = [];
-    cactusTimer = 0;
-    nextCactus  = 80 + Math.floor(Math.random() * 60);
-    score  = 0;
-    speed  = BASE_SPD;
-    legFrame = 0; legTick = 0;
-  }
-
-  function drawDino(x, y, dead, crouching) {
-    const dpr = DPR();
-    const dW  = crouching ? DINO_W_CROUCH : DINO_W;
-    const dH  = crouching ? DINO_H_CROUCH : DINO_H;
-    const col = dead ? '#e04060' : '#e9edef';
-    ctx.save();
-    ctx.fillStyle = col;
-
-    if (crouching) {
-      // ---- crouched shape: wide flat body, head forward ----
-      // body
-      ctx.beginPath();
-      ctx.roundRect(x, y, dW * 0.62 * dpr, dH * dpr, 4 * dpr);
-      ctx.fill();
-      // head (stretched forward and low)
-      ctx.beginPath();
-      ctx.roundRect(x + dW * 0.52 * dpr, y - dH * 0.12 * dpr,
-                    dW * 0.5 * dpr, dH * 0.78 * dpr, 4 * dpr);
-      ctx.fill();
-      // eye
-      ctx.fillStyle = dead ? '#fff' : '#0b141a';
-      const eyeR = 3.5 * dpr;
-      const ex = x + dW * 0.88 * dpr, ey = y + dH * 0.22 * dpr;
-      ctx.beginPath();
-      ctx.arc(ex, ey, eyeR, 0, Math.PI * 2);
-      ctx.fill();
-      if (dead) {
-        ctx.strokeStyle = '#0b141a'; ctx.lineWidth = 2 * dpr;
-        ctx.beginPath(); ctx.moveTo(ex - eyeR, ey - eyeR); ctx.lineTo(ex + eyeR, ey + eyeR); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(ex + eyeR, ey - eyeR); ctx.lineTo(ex - eyeR, ey + eyeR); ctx.stroke();
+  // Wire up item buttons
+  overlay.querySelectorAll('.dress-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const slot = btn.dataset.slot;
+      const item = btn.dataset.item;
+      const el = document.getElementById('dress-' + slot);
+      if (el) {
+        el.textContent = item;
+        el.style.animation = 'none';
+        void el.offsetWidth;
+        el.style.animation = 'msgPop 0.22s ease-out both';
       }
-      // tail
-      ctx.fillStyle = col;
-      ctx.beginPath();
-      ctx.roundRect(x - dW * 0.22 * dpr, y + dH * 0.25 * dpr,
-                    dW * 0.27 * dpr, dH * 0.3 * dpr, 3 * dpr);
-      ctx.fill();
-      // legs (stubby)
-      ctx.fillStyle = col;
-      const cLegOffs = legFrame === 0 ? [0.08, 0.4] : legFrame === 1 ? [0.05, 0.37] : [0.1, 0.43];
-      cLegOffs.forEach(off => {
-        ctx.beginPath();
-        ctx.roundRect(x + off * dW * dpr, y + dH * 0.68 * dpr,
-                      dW * 0.15 * dpr, dH * 0.4 * dpr, 3 * dpr);
-        ctx.fill();
+      // Highlight active in category
+      overlay.querySelectorAll(`.dress-btn[data-slot="${slot}"]`).forEach(b => {
+        b.style.borderColor = '#2a3942';
+        b.style.background = '#1f2c34';
       });
+      btn.style.borderColor = '#00a884';
+      btn.style.background = 'rgba(0,168,132,0.2)';
+      playPop();
+    });
+  });
 
-    } else {
-      // ---- upright shape (original) ----
-      // body
-      ctx.beginPath();
-      ctx.roundRect(x, y, DINO_W * dpr, DINO_H * 0.65 * dpr, 4 * dpr);
-      ctx.fill();
-      // neck + head
-      ctx.beginPath();
-      ctx.roundRect(x + DINO_W * 0.45 * dpr, y - DINO_H * 0.3 * dpr,
-                    DINO_W * 0.55 * dpr, DINO_H * 0.48 * dpr, 4 * dpr);
-      ctx.fill();
-      // eye
-      ctx.fillStyle = dead ? '#fff' : '#0b141a';
-      const eyeR2 = 4 * dpr;
-      const ex2 = x + DINO_W * 0.82 * dpr, ey2 = y - DINO_H * 0.08 * dpr;
-      ctx.beginPath();
-      ctx.arc(ex2, ey2, eyeR2, 0, Math.PI * 2);
-      ctx.fill();
-      if (dead) {
-        ctx.strokeStyle = '#0b141a'; ctx.lineWidth = 2 * dpr;
-        ctx.beginPath(); ctx.moveTo(ex2 - eyeR2, ey2 - eyeR2); ctx.lineTo(ex2 + eyeR2, ey2 + eyeR2); ctx.stroke();
-        ctx.beginPath(); ctx.moveTo(ex2 + eyeR2, ey2 - eyeR2); ctx.lineTo(ex2 - eyeR2, ey2 + eyeR2); ctx.stroke();
+  // Random button
+  const randomBtn = document.getElementById('dress-random');
+  if (randomBtn) {
+    randomBtn.addEventListener('click', () => {
+      const slots = { outfit: [], acc: [], shoes: [] };
+      overlay.querySelectorAll('.dress-btn').forEach(b => {
+        if (slots[b.dataset.slot]) slots[b.dataset.slot].push(b);
+      });
+      Object.values(slots).forEach(arr => {
+        if (arr.length) {
+          const pick = arr[Math.floor(Math.random() * arr.length)];
+          pick.click();
+        }
+      });
+      for (let i = 0; i < 15; i++) {
+        const rect = randomBtn.getBoundingClientRect();
+        spawnInteractiveConfetti(rect.left + rect.width / 2, rect.top, 'explode');
       }
-      // tail
-      ctx.fillStyle = col;
-      ctx.beginPath();
-      ctx.roundRect(x - DINO_W * 0.3 * dpr, y + DINO_H * 0.2 * dpr,
-                    DINO_W * 0.35 * dpr, DINO_H * 0.18 * dpr, 3 * dpr);
-      ctx.fill();
-      // legs
-      if (!dead) {
-        const legOffsets = legFrame === 0 ? [0.15, 0.6] : legFrame === 1 ? [0.05, 0.5] : [0.2, 0.55];
-        legOffsets.forEach((off) => {
-          ctx.fillStyle = '#e9edef';
-          ctx.beginPath();
-          ctx.roundRect(x + off * DINO_W * dpr, y + DINO_H * 0.62 * dpr,
-                        DINO_W * 0.2 * dpr, DINO_H * 0.38 * dpr, 3 * dpr);
-          ctx.fill();
-        });
-      } else {
-        [[0.1, 0.25], [0.5, 0.35]].forEach(([off, ang]) => {
-          ctx.fillStyle = '#e04060';
-          ctx.save();
-          ctx.translate(x + off * DINO_W * dpr, y + DINO_H * 0.62 * dpr);
-          ctx.rotate(ang);
-          ctx.beginPath();
-          ctx.roundRect(0, 0, DINO_W * 0.2 * dpr, DINO_H * 0.38 * dpr, 3 * dpr);
-          ctx.fill();
-          ctx.restore();
-        });
-      }
-    }
-    ctx.restore();
-  }
-
-  function drawCactus(cx, cy, w, h) {
-    const dpr = DPR();
-    ctx.fillStyle = '#25d366';
-    // trunk
-    const tw = w * 0.35 * dpr;
-    ctx.beginPath();
-    ctx.roundRect(cx + (w * dpr - tw) / 2, cy, tw, h * dpr, 3 * dpr);
-    ctx.fill();
-    // left arm
-    ctx.beginPath();
-    ctx.roundRect(cx, cy + h * 0.3 * dpr, (w * dpr - tw) / 2 + tw * 0.5, h * 0.25 * dpr, 3 * dpr);
-    ctx.fill();
-    ctx.beginPath();
-    ctx.roundRect(cx, cy + h * 0.1 * dpr, tw * 0.7, h * 0.22 * dpr, 3 * dpr);
-    ctx.fill();
-    // right arm
-    const rx = cx + (w * dpr - tw) / 2 + tw * 0.5;
-    ctx.beginPath();
-    ctx.roundRect(rx, cy + h * 0.25 * dpr, (w * dpr - tw) / 2, h * 0.25 * dpr, 3 * dpr);
-    ctx.fill();
-    ctx.beginPath();
-    ctx.roundRect(cx + w * dpr - tw * 0.7, cy + h * 0.05 * dpr, tw * 0.7, h * 0.22 * dpr, 3 * dpr);
-    ctx.fill();
-  }
-
-  function spawnCloud() {
-    const dpr  = DPR();
-    const gY   = groundY();
-    const h    = 12 + Math.floor(Math.random() * 16);   // CSS px
-    const w    = 45 + Math.floor(Math.random() * 70);   // CSS px
-    const y    = Math.floor(gY * (0.1 + Math.random() * 0.42)); // canvas px (sky area)
-    clouds.push({ x: canvas.width + w * dpr, y, w, h, speed: 0.5 + Math.random() * 0.7 });
-  }
-
-  function updateClouds() {
-    const dpr = DPR();
-    cloudTimer++;
-    if (cloudTimer >= nextCloud) {
-      spawnCloud();
-      cloudTimer = 0;
-      nextCloud = 100 + Math.floor(Math.random() * 180);
-    }
-    clouds = clouds.filter(c => c.x > -(c.w * dpr * 2));
-    clouds.forEach(c => { c.x -= c.speed * dpr; });
-  }
-
-  function drawClouds() {
-    const dpr = DPR();
-    ctx.fillStyle = 'rgba(255,255,255,0.1)';
-    clouds.forEach(c => {
-      const cx = c.x + c.w * 0.5 * dpr;
-      const cy = c.y;
-      const rx = c.w * 0.42 * dpr;
-      const ry = c.h * 0.5  * dpr;
-      ctx.beginPath();
-      ctx.ellipse(cx,            cy,           rx,        ry,        0, 0, Math.PI * 2); ctx.fill();
-      ctx.beginPath();
-      ctx.ellipse(cx - rx * 0.42, cy + ry * 0.2, rx * 0.52, ry * 0.78, 0, 0, Math.PI * 2); ctx.fill();
-      ctx.beginPath();
-      ctx.ellipse(cx + rx * 0.38, cy + ry * 0.15, rx * 0.48, ry * 0.72, 0, 0, Math.PI * 2); ctx.fill();
     });
   }
-
-  function spawnCacti() {
-    const dpr  = DPR();
-    const W    = canvas.width;
-    const roll = Math.random();
-    if (roll < 0.28) {
-      // Small single cactus
-      cacti.push({ x: W, h: 20 + Math.floor(Math.random() * 12), w: 14 + Math.floor(Math.random() * 7) });
-    } else if (roll < 0.54) {
-      // Tall single cactus
-      cacti.push({ x: W, h: 44 + Math.floor(Math.random() * 22), w: 15 + Math.floor(Math.random() * 8) });
-    } else if (roll < 0.80) {
-      // Double cluster (two cacti close together)
-      const w1  = 15 + Math.floor(Math.random() * 7);
-      const h1  = 28 + Math.floor(Math.random() * 20);
-      const gap = w1 + 4 + Math.floor(Math.random() * 7);
-      cacti.push({ x: W,             h: h1,                                  w: w1 });
-      cacti.push({ x: W + gap * dpr, h: 22 + Math.floor(Math.random() * 18), w: 13 + Math.floor(Math.random() * 7) });
-    } else {
-      // Wide / fat cactus
-      cacti.push({ x: W, h: 28 + Math.floor(Math.random() * 14), w: 26 + Math.floor(Math.random() * 14) });
-    }
-    cactusTimer = 0;
-    nextCactus  = 70 + Math.floor(Math.random() * 80);
-  }
-
-  function drawScene(dead) {
-    const dpr   = DPR();
-    const W     = canvas.width;
-    const H     = canvas.height;
-    const gY    = groundY();
-
-    ctx.clearRect(0, 0, W, H);
-
-    // clouds (background, drawn before ground)
-    drawClouds();
-
-    // ground line
-    ctx.strokeStyle = 'rgba(255,255,255,0.2)';
-    ctx.lineWidth   = 1.5 * dpr;
-    ctx.beginPath();
-    ctx.moveTo(0, gY);
-    ctx.lineTo(W, gY);
-    ctx.stroke();
-
-    // score
-    if (phase === 'playing' || phase === 'dead') {
-      ctx.fillStyle   = 'rgba(233,237,239,0.8)';
-      ctx.font        = `bold ${13 * dpr}px monospace`;
-      ctx.textAlign   = 'right';
-      ctx.fillText('HI ' + String(highScore).padStart(5,'0') + '  ' + String(score).padStart(5,'0'),
-                   W - 12 * dpr, 22 * dpr);
-    }
-
-    // hint text
-    if (phase === 'idle') {
-      ctx.fillStyle = 'rgba(0,168,132,0.9)';
-      ctx.font      = `${12 * dpr}px 'Segoe UI', sans-serif`;
-      ctx.textAlign = 'center';
-      ctx.fillText('🦕  SPACE / TAP to start  ↓ crouch', W / 2, gY - 20 * dpr);
-    }
-
-    if (phase === 'dead') {
-      ctx.fillStyle = 'rgba(233,237,239,0.92)';
-      ctx.font      = `bold ${13 * dpr}px 'Segoe UI', sans-serif`;
-      ctx.textAlign = 'center';
-      ctx.fillText('GAME OVER — tap to restart', W / 2, gY - 22 * dpr);
-    }
-
-    // cacti
-    cacti.forEach(c => drawCactus(c.x, gY - c.h * dpr, c.w, c.h));
-
-    // dino
-    drawDino(dinoX, dinoY, dead, isCrouching);
-  }
-
-  function jump() {
-    if (dinoOnGround && !isCrouching) {
-      dinoVY = JUMP_VEL * DPR();
-      dinoOnGround = false;
-      playPop();
-    }
-  }
-
-  function handleInput() {
-    if (phase === 'idle') {
-      phase = 'playing';
-      reset();
-    } else if (phase === 'playing') {
-      jump();
-    } else if (phase === 'dead') {
-      phase = 'playing';
-      reset();
-    }
-  }
-
-  canvas.addEventListener('click', handleInput);
-
-  // Touch: tap → jump/start; swipe-down → crouch
-  let touchStartY = 0;
-  canvas.addEventListener('touchstart', (e) => {
-    e.preventDefault();
-    touchStartY = e.touches[0].clientY;
-  }, { passive: false });
-  canvas.addEventListener('touchmove', (e) => {
-    e.preventDefault();
-    if (phase === 'playing' && e.touches[0].clientY - touchStartY > 35) isCrouching = true;
-  }, { passive: false });
-  canvas.addEventListener('touchend', (e) => {
-    e.preventDefault();
-    isCrouching = false;
-    if (Math.abs(e.changedTouches[0].clientY - touchStartY) < 30) handleInput();
-  }, { passive: false });
-
-  document.addEventListener('keydown', (e) => {
-    if (e.code === 'Space' && (phase === 'idle' || phase === 'playing' || phase === 'dead')) {
-      e.preventDefault();
-      handleInput();
-    }
-    if (e.code === 'ArrowDown' && phase === 'playing') {
-      e.preventDefault();
-      isCrouching = true;
-    }
-  });
-  document.addEventListener('keyup', (e) => {
-    if (e.code === 'ArrowDown') isCrouching = false;
-  });
-
-  // ---- intro walk-in ----
-  function startIntro() {
-    const dpr  = DPR();
-    introX = canvas.width + DINO_W * dpr * 2;
-    dinoY  = groundY() - DINO_H * dpr;
-    dinoVY = 0;
-    dinoOnGround = true;
-    dinoX  = Math.floor(canvas.width * 0.12);
-  }
-
-  startIntro();
-
-  function introFrame() {
-    const dpr = DPR();
-    const W   = canvas.width, H = canvas.height;
-    const gY  = groundY();
-
-    ctx.clearRect(0, 0, W, H);
-    ctx.strokeStyle = 'rgba(255,255,255,0.2)';
-    ctx.lineWidth   = 1.5 * dpr;
-    ctx.beginPath(); ctx.moveTo(0, gY); ctx.lineTo(W, gY); ctx.stroke();
-
-    // clouds drift in during intro
-    updateClouds();
-    drawClouds();
-
-    // hint at idle position
-    ctx.fillStyle = 'rgba(0,168,132,0.7)';
-    ctx.font      = `${11 * dpr}px 'Segoe UI', sans-serif`;
-    ctx.textAlign = 'center';
-    ctx.fillText('🦕  incoming…', W / 2, gY - 16 * dpr);
-
-    // walk legs
-    legTick++;
-    if (legTick % 7 === 0) legFrame = (legFrame + 1) % 3;
-
-    const walkSpeed = 4 * dpr;
-    introX -= walkSpeed;
-
-    drawDino(introX, gY - DINO_H * dpr, false, false);
-
-    if (introX <= dinoX) {
-      phase = 'idle';
-      cancelAnimationFrame(frameId);
-      frameId = requestAnimationFrame(gameLoop);
-    } else {
-      frameId = requestAnimationFrame(introFrame);
-    }
-  }
-
-  function gameLoop() {
-    const dpr = DPR();
-    const W   = canvas.width;
-    const gY  = groundY();
-
-    if (phase === 'idle') {
-      legTick++;
-      if (legTick % 18 === 0) legFrame = (legFrame + 1) % 3;
-      updateClouds();
-      drawScene(false);
-      frameId = requestAnimationFrame(gameLoop);
-      return;
-    }
-
-    if (phase === 'dead') {
-      updateClouds();
-      drawScene(true);
-      frameId = requestAnimationFrame(gameLoop);
-      return;
-    }
-
-    // --- playing ---
-    score++;
-    if (score > highScore) highScore = score;
-    if (score % SPEED_INCREASE_INTERVAL === 0) speed = Math.min(BASE_SPD + score / SPEED_INCREASE_INTERVAL, MAX_SPEED);
-
-    // dino physics
-    if (!dinoOnGround) {
-      dinoVY += GRAVITY * dpr;
-      dinoY  += dinoVY;
-      const floor = gY - DINO_H * dpr;
-      if (dinoY >= floor) {
-        dinoY = floor;
-        dinoVY = 0;
-        dinoOnGround = true;
-      }
-    }
-    // Snap to lower crouch position when on ground + crouching
-    if (dinoOnGround && isCrouching) {
-      dinoY = gY - DINO_H_CROUCH * dpr;
-    } else if (dinoOnGround && !isCrouching) {
-      dinoY = gY - DINO_H * dpr;
-    }
-
-    // legs walk animation
-    legTick++;
-    if (legTick % 6 === 0) legFrame = (legFrame + 1) % 3;
-
-    // clouds
-    updateClouds();
-
-    // spawn cacti
-    cactusTimer++;
-    if (cactusTimer >= nextCactus) {
-      spawnCacti();
-    }
-
-    // move + prune cacti
-    cacti = cacti.filter(c => c.x > -c.w * dpr * 2);
-    cacti.forEach(c => { c.x -= speed * dpr; });
-
-    // collision (use crouched dimensions when applicable)
-    const curW    = isCrouching ? DINO_W_CROUCH : DINO_W;
-    const curH    = isCrouching ? DINO_H_CROUCH : DINO_H;
-    const dLeft   = dinoX + curW * 0.2  * dpr;
-    const dRight  = dinoX + curW * 0.88 * dpr;
-    const dBottom = dinoY + curH * 0.95 * dpr;
-    const dTop    = dinoY + curH * 0.15 * dpr;
-
-    for (const c of cacti) {
-      const cLeft   = c.x + c.w * 0.1 * dpr;
-      const cRight  = c.x + c.w * 0.9 * dpr;
-      const cTop    = gY - c.h * dpr;
-      if (dRight > cLeft && dLeft < cRight && dBottom > cTop) {
-        phase = 'dead';
-        playTone(200, 'sawtooth', 0.3, getAudioCtx().currentTime, 0.35);
-        break;
-      }
-    }
-
-    drawScene(false);
-    frameId = requestAnimationFrame(gameLoop);
-  }
-
-  frameId = requestAnimationFrame(introFrame);
 }
